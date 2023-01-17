@@ -71,8 +71,6 @@ date.addEventListener('input', function ()
 		fetchData().then(result => 
 		{
 		     console.log(result);
-			
-		     
 		    if(document.getElementById('radiobtn2').checked) 
 			{   const LN=(result) => result.Year==selected_year && result.Month==monthName;
 				var position=result.findIndex(LN);
@@ -159,14 +157,24 @@ date.addEventListener('input', function ()
 								y: {
 								title: {
 								display: true, 
-								text: 'Fuel Cost (unit/ UK pence)',
+								text: 'Fuel Cost (unit/ UK pound)',
 								font: {
 								size: 15
 								}
 								},
 								min: 00,
-								max: 180
-								},
+								max: 400,
+
+								ticks: {
+									callback: (value, index, values) => {
+									 // return value;
+									 return new Intl.NumberFormat('en-GB', {style: 'currency',
+								 currency: 'GBP',
+								  maximunSignificantDigits: 3
+								 }).format(value);
+								}
+								}
+							},
 								x: {
 								title: {
 								display: true, 
@@ -182,8 +190,7 @@ date.addEventListener('input', function ()
 								plugins: {
 								title: {
 								display: true, 
-								text: 'Fuel Cost Comparison from 1996 - 2022',
-								//text: 'All costs are in UK pence',
+								text: 'Fuel Cost Comparison from January 1996 - August 2022',
 								font: {
 								size: 20
 								}
